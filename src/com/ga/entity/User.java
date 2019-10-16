@@ -25,6 +25,10 @@ public class User {
     )
     private List<Song> songs;
 
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "user_role_id")
+    private UserRole userRole;
+
     public User() {}
 
     public User(String username, String password) {
