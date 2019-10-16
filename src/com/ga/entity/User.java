@@ -1,6 +1,8 @@
 package com.ga.entity;
 
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -16,11 +18,26 @@ public class User {
     @Column (nullable = false)
     private String password;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade ={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "user_song",
+        joinColumns = {@JoinColumn(name = "user_id")},
+            inverseJoinColumns = {@JoinColumn(name = "song_id")}
+    )
+    private List<Song> songs;
+
     public User() {}
 
     public User(String username, String password) {
         this.username = username;
         this.password = password;
+    }
+
+    public List<Song> getSongs() {
+        return songs;
+    }
+
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
     }
 
     public Long getUserId() {
