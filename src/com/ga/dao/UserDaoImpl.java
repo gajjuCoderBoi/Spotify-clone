@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -16,12 +16,12 @@ public class UserDaoImpl implements UserDao{
     public User signup(User user) {
         Session session = sessionFactory.getCurrentSession();
 
-        try{
+        try {
             session.beginTransaction();
             session.save(user);
 
             session.getTransaction().commit();
-        }finally {
+        } finally {
             session.close();
         }
 
@@ -33,10 +33,9 @@ public class UserDaoImpl implements UserDao{
         Session session = sessionFactory.getCurrentSession();
         User savedUser;
 
-        try{
+        try {
             session.beginTransaction();
-            savedUser = (User)session.createQuery("FROM User u WHERE u.username = '" +
-                    user.getUsername() + "' AND u.password = '" +
+            savedUser = (User) session.createQuery("FROM User u WHERE u.username = '" +
                     user.getPassword() + "'").getSingleResult();
 
         } finally {
@@ -52,7 +51,7 @@ public class UserDaoImpl implements UserDao{
 
         Session session = sessionFactory.getCurrentSession();
 
-        try{
+        try {
             session.beginTransaction();
             savedUser = session.get(User.class, userId);
             savedUser.setPassword(user.getPassword());
@@ -60,7 +59,7 @@ public class UserDaoImpl implements UserDao{
             session.update(savedUser);
 
             session.getTransaction().commit();
-        }finally {
+        } finally {
             session.close();
         }
 
@@ -72,17 +71,56 @@ public class UserDaoImpl implements UserDao{
         User deleteUser = null;
         Session session = sessionFactory.getCurrentSession();
 
-        try{
+        try {
             session.beginTransaction();
             deleteUser = session.get(User.class, userId);
             session.delete(deleteUser);
 
             session.getTransaction().commit();
 
-        }finally {
+        } finally {
             session.close();
         }
 
         return deleteUser;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        User savedUser = null;
+
+        Session session = sessionFactory.getCurrentSession();
+
+        try {
+            session.beginTransaction();
+            savedUser = (User) session.createQuery("FROM User u where u.username='" + username + "'").getSingleResult();
+
+        } finally {
+            session.close();
+        }
+
+        return savedUser;
+    }
+
+    @Override
+    public User getUserById(long userId) {
+        User savedUser = null;
+
+        Session session = sessionFactory.getCurrentSession();
+
+        try {
+
+            session.beginTransaction();
+
+            savedUser = session.get(User.class, userId);
+
+
+        } finally {
+
+            session.close();
+
+        }
+
+        return savedUser;
     }
 }

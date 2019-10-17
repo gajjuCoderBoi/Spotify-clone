@@ -7,6 +7,6 @@ public interface UserDao {
     public User login(User user);
     public User updateUser(User user, Long userId);
     public User deleteUser(Long userId);
-
-
+    public User getUserByUsername(String username);
+    public User getUserById(long userId);
 }

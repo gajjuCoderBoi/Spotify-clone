@@ -1,7 +1,5 @@
 package com.ga.entity;
 
-import com.sun.tools.javac.comp.Resolve;
-
 import javax.persistence.*;
 import java.util.List;
 
