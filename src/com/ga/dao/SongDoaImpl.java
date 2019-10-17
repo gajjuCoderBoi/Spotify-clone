@@ -1,6 +1,7 @@
 package com.ga.dao;
 
 import com.ga.entity.Song;
+import com.ga.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,5 +49,18 @@ public class SongDoaImpl implements SongDao {
     @Override
     public Song deleteSong(Long SongId) {
         return null;
+    }
+
+    @Override
+    public List<User> listeners(Long songId) {
+        List<User> users= null;
+        Session session = sessionFactory.getCurrentSession();
+        try{
+            session.beginTransaction();
+            users = session.get(Song.class, songId).getUsers();
+        }finally {
+            session.close();
+        }
+        return users;
     }
 }

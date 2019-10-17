@@ -2,6 +2,7 @@ package com.ga.service;
 
 import com.ga.dao.SongDao;
 import com.ga.entity.Song;
+import com.ga.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,5 +32,10 @@ public class SongServiceImpl implements SongService {
     @Override
     public Song deleteSong(Long songId) {
         return songDao.deleteSong(songId);
+    }
+
+    @Override
+    public List<User> listeners(Long songId) {
+        return songDao.listeners(songId);
     }
 }
