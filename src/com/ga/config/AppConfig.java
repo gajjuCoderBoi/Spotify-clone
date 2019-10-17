@@ -33,7 +33,7 @@ public class AppConfig {
         BasicDataSource dataSource = new BasicDataSource();
 
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/ga");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/spotifyclone");
 
         return dataSource;
     }
