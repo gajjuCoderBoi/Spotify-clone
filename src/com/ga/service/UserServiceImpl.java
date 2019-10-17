@@ -1,5 +1,6 @@
 package com.ga.service;
 
+import com.ga.config.JwtUtil;
 import com.ga.dao.UserDao;
 import com.ga.entity.Song;
 import com.ga.entity.User;
@@ -21,14 +22,26 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    JwtUtil jwtUtil;
+
     @Override
-    public User signup(User user) {
-        return userDao.signup(user);
+    public String signup(User user) {
+        if(userDao.signup(user).getUserId()!= null){
+            UserDetails userDetails = loadUserByUsername(user.getUsername());
+
+            return jwtUtil.generateToken(userDetails);
+        }
+        return null;
     }
 
     @Override
-    public User login(User user) {
-        return userDao.login(user);
+    public String login(User user) {
+        if(userDao.login(user) != null){
+            UserDetails userDetails = loadUserByUsername(user.getUsername());
+            return jwtUtil.generateToken(userDetails);
+        }
+        return null;
     }
 
     @Override
@@ -68,7 +81,7 @@ public class UserServiceImpl implements UserService {
     private List<GrantedAuthority> getGrantedAuthority(User user) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
+        grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
 
         return grantedAuthorities;
     }
