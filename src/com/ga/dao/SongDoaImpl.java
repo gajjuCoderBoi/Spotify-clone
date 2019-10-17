@@ -29,7 +29,15 @@ public class SongDoaImpl implements SongDao {
 
     @Override
     public Song createSong(Song song) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        try {
+            session.beginTransaction();
+            session.save(song);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+        return song;
     }
 
     @Override
