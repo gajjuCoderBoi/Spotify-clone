@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/song")
+@RequestMapping("/songs")
 public class SongController {
 
     @Autowired
@@ -26,17 +26,17 @@ public class SongController {
     }
 
     @PutMapping("/{songId}")
-    public Song update(@RequestBody Song song, @RequestAttribute("songId") Long songId){
+    public Song update(@RequestBody Song song, @PathVariable(value = "songId") Long songId){
         return songService.updateSong(song, songId);
     }
 
     @DeleteMapping("/{songId}")
-    public long delete(@RequestAttribute("songId") Long songId){
+    public long delete(@PathVariable(value = "songId") Long songId){
         return songService.deleteSong(songId).getSongId();
     }
 
     @GetMapping("/{songId}/listeners")
-    public List<User> listeners(@RequestAttribute("songId") Long songId){
+    public List<User> listeners(@PathVariable(value = "songId") Long songId){
         return songService.listeners(songId);
     }
 
