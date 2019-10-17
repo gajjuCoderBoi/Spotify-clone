@@ -38,5 +38,10 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserById(userId).getSongs();
     }
 
+    @Override
+    public List<Song> addListener(Long userId, Long songId) {
+        return userDao.addListener(userId, songId);
+    }
+
 
 }

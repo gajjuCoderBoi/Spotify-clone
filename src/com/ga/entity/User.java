@@ -1,6 +1,9 @@
 package com.ga.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,13 +21,15 @@ public class User {
     @Column (nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade ={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER, cascade ={CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "user_song",
-        joinColumns = {@JoinColumn(name = "user_id")},
+        joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = {@JoinColumn(name = "song_id")}
     )
     private List<Song> songs;
 
+    @JsonIgnore
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "user_role_id")
     private UserRole userRole;
@@ -66,5 +71,11 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Song> addSong(Song song){
+        if (songs==null)    songs = new ArrayList<>();
+        songs.add(song);
+        return songs;
     }
 }
