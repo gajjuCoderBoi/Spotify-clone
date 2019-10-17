@@ -1,6 +1,9 @@
 package com.ga.dao;
 
+import com.ga.entity.Song;
 import com.ga.entity.User;
+
+import java.util.List;
 
 public interface UserDao {
     public User signup(User user);
@@ -9,4 +12,5 @@ public interface UserDao {
     public User deleteUser(Long userId);
     public User getUserByUsername(String username);
     public User getUserById(long userId);
+    List<Song> addListener(Long userId, Long songId);
 }

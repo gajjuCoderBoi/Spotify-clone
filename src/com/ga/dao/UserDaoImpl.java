@@ -1,10 +1,13 @@
 package com.ga.dao;
 
+import com.ga.entity.Song;
 import com.ga.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -36,7 +39,7 @@ public class UserDaoImpl implements UserDao {
         try {
             session.beginTransaction();
             savedUser = (User) session.createQuery("FROM User u WHERE u.username = '" +
-                    user.getPassword() + "'").getSingleResult();
+                    user.getUsername() + "'").getSingleResult();
 
         } finally {
             session.close();
@@ -122,5 +125,27 @@ public class UserDaoImpl implements UserDao {
         }
 
         return savedUser;
+    }
+
+    @Override
+    public List<Song> addListener(Long userId, Long songId) {
+        User user = null;
+        Song song = null;
+
+        Session session = sessionFactory.getCurrentSession();
+        try{
+            session.beginTransaction();
+            user = session.get(User.class, userId);
+            song = session.get(Song.class, songId);
+            user.setSongs(
+                    user.addSong(song)
+            );
+
+            session.update(user);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+        return user.getSongs();
     }
 }
