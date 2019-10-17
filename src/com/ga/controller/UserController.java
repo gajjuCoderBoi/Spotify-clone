@@ -19,6 +19,12 @@ public class UserController {
     @Autowired
     SongService songService;
 
+//    @PreAuthorize("hasRole('ADMIN')")
+//    @GetMapping("/list")
+//    public List<User> listUsers() {
+//        return userService.listUsers();
+//    }
+
     @PostMapping("/signup")
     public User signup(@RequestBody User user) {
         return userService.signup(user);

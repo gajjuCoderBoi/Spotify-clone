@@ -73,6 +73,14 @@ public class User {
         this.password = password;
     }
 
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+
     public List<Song> addSong(Song song){
         if (songs==null)    songs = new ArrayList<>();
         songs.add(song);
