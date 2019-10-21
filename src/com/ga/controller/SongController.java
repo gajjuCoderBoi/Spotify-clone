@@ -32,7 +32,7 @@ public class SongController {
 
     @DeleteMapping("/{songId}")
     public long delete(@PathVariable(value = "songId") Long songId){
-        return songService.deleteSong(songId).getSongId();
+        return songService.deleteSong(songId);
     }
 
     @GetMapping("/{songId}/listeners")

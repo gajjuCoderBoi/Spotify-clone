@@ -30,8 +30,8 @@ public class SongServiceImpl implements SongService {
     }
 
     @Override
-    public Song deleteSong(Long songId) {
-        return songDao.deleteSong(songId);
+    public Long deleteSong(Long songId) {
+        return songDao.deleteSong(songId).getSongId();
     }
 
     @Override
