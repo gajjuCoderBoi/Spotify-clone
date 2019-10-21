@@ -9,7 +9,7 @@ public interface SongService {
     public List<Song> songList();
     public Song createSong(Song song);
     public Song updateSong(Song song, Long songId);
-    public Song deleteSong(Long songId);
+    public Long deleteSong(Long songId);
     public List<User> listeners(Long songId);
 
 }

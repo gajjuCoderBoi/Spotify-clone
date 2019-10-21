@@ -10,7 +10,7 @@ public interface UserService extends UserDetailsService {
     public String signup(User user);
     public String login(User user);
     public User updateUser(User user, Long userId);
-    public User deleteUser(Long userId);
+    public Long deleteUser(Long userId);
     public List<Song> songList(Long userId);
     public List<Song> addListener(Long userId, Long songId);
 

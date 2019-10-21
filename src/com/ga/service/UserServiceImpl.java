@@ -4,7 +4,6 @@ import com.ga.config.JwtUtil;
 import com.ga.dao.UserDao;
 import com.ga.entity.Song;
 import com.ga.entity.User;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -56,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteUser(Long userId) {
-        return userDao.deleteUser(userId);
+    public Long deleteUser(Long userId) {
+        return userDao.deleteUser(userId).getUserId();
     }
 
     @Override

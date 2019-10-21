@@ -42,13 +42,36 @@ public class SongDoaImpl implements SongDao {
     }
 
     @Override
-    public Song updateSong(Song Song, Long SongId) {
-        return null;
+    public Song updateSong(Song song, Long songId) {
+        Song savedSong = null;
+        Session session = sessionFactory.getCurrentSession();
+
+        try{
+            session.beginTransaction();
+            savedSong = session.get(Song.class, songId);
+            savedSong.setName(song.getName());
+            savedSong.setLength(song.getLength());
+            session.update(song);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+        return song;
     }
 
     @Override
-    public Song deleteSong(Long SongId) {
-        return null;
+    public long deleteSong(Long songId) {
+        Song savedSong = null;
+        Session session = sessionFactory.getCurrentSession();
+        try{
+            session.beginTransaction();
+            savedSong = session.get(Song.class, songId);
+            session.delete(savedSong);
+            session.getTransaction().commit();
+        }finally {
+            session.close();
+        }
+        return savedSong.getSongId();
     }
 
     @Override
