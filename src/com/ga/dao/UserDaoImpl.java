@@ -133,7 +133,7 @@ public class UserDaoImpl implements UserDao {
         Song song = null;
 
         Session session = sessionFactory.getCurrentSession();
-        try{
+        try {
             session.beginTransaction();
             user = session.get(User.class, userId);
             song = session.get(Song.class, songId);
@@ -143,9 +143,24 @@ public class UserDaoImpl implements UserDao {
 
             session.update(user);
             session.getTransaction().commit();
-        }finally {
+        } finally {
             session.close();
         }
         return user.getSongs();
+    }
+
+    @Override
+    public List<User> listUsers() {
+        List<User> userList = null;
+        Session session = sessionFactory.getCurrentSession();
+
+        try {
+            session.beginTransaction();
+            userList = session.createQuery("from User").getResultList();
+        } finally {
+            session.close();
+        }
+
+        return userList;
     }
 }

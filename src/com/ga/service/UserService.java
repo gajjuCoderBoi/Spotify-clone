@@ -13,4 +13,6 @@ public interface UserService extends UserDetailsService {
     public User deleteUser(Long userId);
     public List<Song> songList(Long userId);
     public List<Song> addListener(Long userId, Long songId);
+
+    public List<User> listUsers();
 }

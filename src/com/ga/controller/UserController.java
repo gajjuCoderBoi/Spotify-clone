@@ -7,6 +7,7 @@ import com.ga.service.SongService;
 import com.ga.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +22,11 @@ public class UserController {
     @Autowired
     SongService songService;
 
-//    @PreAuthorize("hasRole('ADMIN')")
-//    @GetMapping("/list")
-//    public List<User> listUsers() {
-//        return userService.listUsers();
-//    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/list")
+    public List<User> listUsers() {
+        return userService.listUsers();
+    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User user) {

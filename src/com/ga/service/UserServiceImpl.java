@@ -4,6 +4,7 @@ import com.ga.config.JwtUtil;
 import com.ga.dao.UserDao;
 import com.ga.entity.Song;
 import com.ga.entity.User;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.GrantedAuthority;
@@ -69,6 +70,11 @@ public class UserServiceImpl implements UserService {
         return userDao.addListener(userId, songId);
     }
 
+    @Override
+    public List<User> listUsers() {
+        return userDao.listUsers();
+    }
+
 
     @Autowired
     @Qualifier("encoder")
@@ -86,7 +92,7 @@ public class UserServiceImpl implements UserService {
     private List<GrantedAuthority> getGrantedAuthority(User user) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        grantedAuthorities.add(new SimpleGrantedAuthority("ADMIN"));
+        grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
 
         return grantedAuthorities;
     }
